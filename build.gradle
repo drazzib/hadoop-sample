@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'fatjar'
+apply plugin: 'idea'
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+//change this value here
+archivesBaseName = 'template'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'eu.appsatori:gradle-fatjar-plugin:0.2-rc1'
+  }
+}
+
+repositories {
+    mavenCentral()
+    mavenRepo url: "https://repository.cloudera.com/artifactory/cloudera-repos/"
+}
+
+
+dependencies{
+    compile (
+            'org.apache.hadoop:hadoop-core:1.1.1',
+            'org.codehaus.jackson:jackson-core-asl:1.8.8'
+    )
+    testCompile (
+            'junit:junit:4.11',
+            'org.mockito:mockito-all:1.9.5',
+            'org.apache.mrunit:mrunit:0.8.0-incubating'
+    )
+}
+
+fatJar {
+    exclude 'META-INF/*.DSA'
+}
+
